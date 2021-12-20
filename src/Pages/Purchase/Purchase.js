@@ -5,16 +5,14 @@ import Header from '../Share/Header/Header';
 const Purchase = () => {
     const { purchaseId } = useParams();
     const [purchase, setPurchase] = useState([]);
-    const [confirm, setConfirm] = useState(false);
     const { user } = useAuth();
-    const status = 'Pending';
 
     const initialInfo = { name: user.displayName, email: user.email, phone: '' }
     const [confirmPurchased, setConfirmPurchased] = useState(initialInfo)
 
 
     useEffect(() => {
-        const url = `http://localhost:5000/books/${purchaseId}`;
+        const url = `https://boiling-journey-11612.herokuapp.com/books/${purchaseId}`;
         fetch(url)
             .then(res => res.json())
             .then(data => setPurchase(data));
@@ -27,31 +25,6 @@ const Purchase = () => {
         newInfo[field] = value;
         console.log(newInfo);
         setConfirmPurchased(newInfo);
-    }
-
-    const handleInfo = e => {
-        e.preventDefault();
-        const purchased = {
-            ...confirmPurchased,
-            status,
-            itemName:purchase.name,
-            itemPrice:purchase.price
-        }
-        fetch('http://localhost:5000/purchased', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(purchased)
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.acknowledged) {
-                    setConfirm(true);
-                    document.getElementById("create-course-form").reset();
-                    alert('Order Placed Successfully');
-                }
-            })
     }
     return (
         <>
@@ -70,7 +43,7 @@ const Purchase = () => {
                     </div>
                     <div className="col">
                         <h3>Fill the Form for Confirmed<span className='text-danger'> Purchase</span></h3>
-                        <form className="row g-3 w-100 inputFrom mt-2" id="create-course-form" onSubmit={handleInfo}>
+                        <form className="row g-3 w-100 inputFrom mt-2" id="create-course-form">
                             <div className="col-12">
                                 <label for="inputAddress" className="form-label">Name</label>
                                 <input type="text" defaultValue={user.displayName} name='name' onBlur={handleOnBlur} className="form-control" id="inputAddress" />
@@ -90,11 +63,7 @@ const Purchase = () => {
                             <div className="col-12">
                                 <button type="submit" className="btn btn-dark">Confirmed</button>
                             </div>
-                            {
-                                confirm && <div class="alert alert-success" role="alert">
-                                    Order Placed Successfully
-                                </div>
-                            }
+                            
                         </form>
                     </div>
                 </div>

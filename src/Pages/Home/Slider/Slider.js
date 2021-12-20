@@ -10,7 +10,7 @@ const Slider = () => {
         
         <div class="row row-cols-1 row-cols-md-2">
                 <div class="col d-flex justify-content-center align-items-center">
-                    <h1>Book For Every Books Lover</h1>
+                    <h1>Books For Every Book Lover</h1>
                 </div>
                 <div class="col">
                     <Carousel>

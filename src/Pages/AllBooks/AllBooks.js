@@ -5,7 +5,7 @@ import Header from '../Share/Header/Header';
 const AllBooks = () => {
     const [books,setBooks]=useState([]);
     useEffect(()=>{
-        fetch('http://localhost:5000/books')
+        fetch('https://boiling-journey-11612.herokuapp.com/books')
         .then(res=>res.json())
         .then(data=>setBooks(data))
     },[]);
