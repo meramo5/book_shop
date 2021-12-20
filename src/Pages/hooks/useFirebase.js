@@ -56,25 +56,6 @@ const useFirebase=()=>{
             });
     }
 
-
-    const googleSignIn = (location, history) => {
-        setIsLoading(true);
-        signInWithPopup(auth, googleProvider)
-            .then((result) => {                        
-                const user = result.user;
-                console.log(user);
-                // saveUser(user.email,user.displayName,'PUT');
-                
-                const destination = location?.state.from || '/';
-                history.replace(destination);
-                setError('');
-            }).catch((error) => {
-                setError(error.message);
-            })
-            .finally(() => {
-                // setIsLoading(false)
-            });           
-    }
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
