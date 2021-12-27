@@ -60,8 +60,9 @@ const useFirebase=()=>{
                 const user = result.user;
                 console.log(user);
                 const destination = location?.state.from || '/';
-                history.replace(destination);
                 setError('');
+                history.replace(destination);
+                
             }).catch((error) => {
                 setError(error.message);
             })

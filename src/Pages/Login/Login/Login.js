@@ -51,6 +51,11 @@ const Login = () => {
                                     <button type="submit" class="btn btn-dark  text-center mb-3">Sign in</button>
                                 </div>
                             </form>
+                            {
+                            error && <div class="alert alert-danger" role="alert">
+                                {error}
+                            </div>
+                        }
                             <p className=' text-center'>Not a Member?<Link to='/register'> Sign up</Link> </p>
                         </div>
                         <div className=' text-center'>
