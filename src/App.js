@@ -10,6 +10,8 @@ import AuthProvider from './Pages/context/AuthProvider/AuthProvider';
 import Register from './Pages/Login/Register/Register';
 import AllBooks from './Pages/AllBooks/AllBooks';
 import Purchase from './Pages/Purchase/Purchase';
+import PrivateRoute from './Pages/Login/PrivateRoute/PrivateRoute';
+import PageNotFound from './Pages/PageNotFound/PageNotFound';
 function App() {
   return (
     <div className="">
@@ -31,15 +33,12 @@ function App() {
             <Route path='/books'>
               <AllBooks></AllBooks>
             </Route>
-            <Route path='/purchase/:purchaseId'>
+            <PrivateRoute path='/purchase/:purchaseId'>
               <Purchase></Purchase>
-            </Route>
-            {/* <PrivateRoute path='/dashboard'>
-              <Dashboard></Dashboard>
-            </PrivateRoute>           
+            </PrivateRoute>          
             <Route path='*'>
-              <PagenotFound></PagenotFound>
-            </Route> */}
+              <PageNotFound></PageNotFound>
+            </Route>
           </Switch>
         </Router>
       </AuthProvider>

@@ -48,10 +48,10 @@ const Login = () => {
                                     <input type="password" name="password" onBlur={handleOnBlur} class="form-control " id="inputPassword4" />
                                 </div>
                                 <div class="col-12 text-center">
-                                    <button type="submit" class="btn btn-dark  text-center">Sign in</button>
+                                    <button type="submit" class="btn btn-dark  text-center mb-3">Sign in</button>
                                 </div>
                             </form>
-                            <p className=' text-center'>Not a Member?<Link to='/register'>Sign up Now</Link> </p>
+                            <p className=' text-center'>Not a Member?<Link to='/register'> Sign up</Link> </p>
                         </div>
                         <div className=' text-center'>
                             <button className='btn btn-dark' onClick={handleGoogleSignIn}>Google Sign in</button>
