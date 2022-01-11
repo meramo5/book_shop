@@ -38,7 +38,7 @@ const Register = () => {
                         </div>
                         <div className="col-12">
                             <label for="inputPassword4" className="form-label">Password</label>
-                            <input type="password" name='password' onBlur={handleOnBlur} className="form-control" id="inputPassword4" />
+                            <input type="password" name='password' onBlur={handleOnBlur} className="form-control" id="inputPassword4" placeholder='Enter Atleast 6 length Password'/>
                         </div>
                         {
                             error && <div class="alert alert-danger" role="alert">

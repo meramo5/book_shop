@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { useLocation, useHistory, Link } from 'react-router-dom';
+import { useLocation,useHistory,Link } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import './Login.css';
 
 const Login = () => {
-    const { googleSignIn, loginUser, error } = useAuth();
+    const { googleSignIn, loginUser,error } = useAuth();
     const [loginData, setLoginData] = useState({});
 
 
@@ -30,9 +30,9 @@ const Login = () => {
     }
     return (
         <div className='container mt-5'>
-            <div className='row row-cols-1 row-cols-md-3 '>
+        <div className='row row-cols-1 row-cols-md-3 '>
                 <div className="col">
-
+                    
                 </div>
                 <div className="col">
                     <div className='w-100 m-auto mt-5 loginFrom'>
@@ -52,10 +52,10 @@ const Login = () => {
                                 </div>
                             </form>
                             {
-                                error && <div class="alert alert-danger" role="alert">
-                                    {error}
-                                </div>
-                            }
+                            error && <div class="alert alert-danger" role="alert">
+                                {error}
+                            </div>
+                        }
                             <p className=' text-center'>Not a Member?<Link to='/register'> Sign up</Link> </p>
                         </div>
                         <div className=' text-center'>
@@ -65,14 +65,14 @@ const Login = () => {
                     </div>
                 </div>
                 <div className="col">
-
+                    
                 </div>
             </div>
-
+            
         </div>
-
-
-
+        
+        
+        
     );
 };
 
