@@ -4,21 +4,21 @@ import { Link } from 'react-router-dom';
 const Services = () => {
     const [books,setBooks]=useState([]);
     useEffect(()=>{
-        fetch('https://boiling-journey-11612.herokuapp.com/books')
+        fetch('https://obscure-mesa-53122.herokuapp.com/books')
         .then(res=>res.json())
         .then(data=>setBooks(data))
     },[]);
-    const product = books.slice(0,6);
+    const product = books.slice(0,8);
     return (
         <div className='container mt-5'>
             <h1 className='text-center'>Find Your Books</h1>
             <h6 className='text-danger m-auto text-center border-2 mb-3 border-bottom border-danger w-25'>Get Your Favourite books from here</h6>
             
-            <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            <div className="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
             {
                 product.map(book=><div class="col">
                 <div class="card">
-                    <img src={book.img} class="card-img-top" alt="..."/>
+                    <img height={200} src={book.img} class="card-img-top" alt="..."/>
                     <div class ="card-body">
                     <h4 class ="card-title">{book.name}</h4>
                     <h5>Price: <span className='text-danger'>${book.price}</span></h5>
