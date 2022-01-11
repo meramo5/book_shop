@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react"
 import { getAuth, createUserWithEmailAndPassword, signOut, onAuthStateChanged, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup,updateProfile} from "firebase/auth";
 import userAuthentication from "../Login/Firebase/firebase.init";
+import userPic from "../../images/defaultPic.png";
 
 userAuthentication();
 const useFirebase=()=>{
     const [user,setUser]=useState({});
     const [error,setError]=useState('');
     const [isLoading,setIsLoading]=useState(true);
-
+    const [admin,setAdmin]=useState(false);
+    const massage='Invalid Username or Password';
     const auth = getAuth();
     const googleProvider = new GoogleAuthProvider();
 
@@ -15,21 +17,23 @@ const useFirebase=()=>{
         setIsLoading(true);
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
+                saveUser(email,name,'POST');
                 setError('');
                 const newUser = { email, displayName: name };
                 setUser(newUser);
 
                 updateProfile(auth.currentUser, {
-                    displayName: name
+                    displayName: name,
+                    photoURL: userPic
                 }).then(() => {
                 }).catch((error) => {
-                    setError(error.message);
+                    setError(massage);
                 });
 
                 history.replace('/');
             })
             .catch((error) => {
-                setError(error.message);
+                setError(error.massage);
                 // ..
             }).finally(() => {
                 setIsLoading(false)
@@ -41,13 +45,15 @@ const useFirebase=()=>{
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in 
-                const destination = location?.state.from || '/home';
-                history.replace(destination);             
-                // const user = userCredential.user;
+                const destination = location?.state.from || '/';
+                history.replace(destination);
                 setError('');
             })
             .catch((error) => {
-                setError(error.message);
+                if(error){
+                    setError(error.massage);
+                    console.log(error);
+                }
             })
             .finally(() => {
                 setIsLoading(false)
@@ -64,7 +70,9 @@ const useFirebase=()=>{
                 history.replace(destination);
                 
             }).catch((error) => {
-                setError(error.message);
+                if(error){
+                    setError(massage);
+                }
             })
             .finally(() => {
                 // setIsLoading(false)
@@ -74,6 +82,7 @@ const useFirebase=()=>{
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
                 setUser(user);
+                console.log(user)
             } else {
                 setUser({});
             }
@@ -81,6 +90,33 @@ const useFirebase=()=>{
         });
         return () => unsubscribe;
     }, [auth]);
+
+    useEffect(()=>{
+        fetch(`https://obscure-mesa-53122.herokuapp.com/users/${user.email}`)
+        .then(res=>res.json())
+        .then(data=>{
+            setAdmin(data.admin);
+            if (data.admin) {
+                localStorage.setItem("state", true);
+              }
+        })
+    },[user.email])
+
+    const saveUser=(email,displayName,method)=>{
+        const user={email,displayName};
+        fetch('https://obscure-mesa-53122.herokuapp.com/users',{
+            method:method,
+            headers:{
+                'content-type':'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            console.log(data)
+            setIsLoading(false)
+        });
+    }
     const logout = () => {
         setIsLoading(true);
         signOut(auth).then(() => {
@@ -94,7 +130,14 @@ const useFirebase=()=>{
             });
     }
     return{
-        user,error,isLoading,logout,googleSignIn,loginUser,registerUser
+        user,
+        admin,
+        error,
+        isLoading,
+        logout,
+        googleSignIn,
+        loginUser,
+        registerUser
     }
 }
 export default useFirebase;
